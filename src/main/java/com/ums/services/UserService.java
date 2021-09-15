@@ -11,4 +11,6 @@ public interface UserService {
 	public List<User> getUserByCategoryName(String categoryName);
 	public List<User> getUserByKeyword(String keyword);
 	public void removeUser(int id);
+	public User getUserById(int userId);
+	public User updateUser(User user);
 }

@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import com.ums.services.UserService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class MainController {
 	
 	@Autowired
@@ -48,6 +51,11 @@ public class MainController {
 		return ResponseEntity.ok(userService.getUserByKeyword(keyword));
 	}
 	
+	@GetMapping("/user/with-id/{id}")
+	public ResponseEntity<User> viewUsersById(@PathVariable("id")int userId){
+		return ResponseEntity.ok(userService.getUserById(userId));
+	}
+	
 	@DeleteMapping("/user/delete/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable("id")int userId){
 		userService.removeUser(userId);
@@ -63,5 +71,10 @@ public class MainController {
 	@GetMapping("/categories")
 	public ResponseEntity<List<Category>> viewAllCategories(){
 		return ResponseEntity.ok(categoryService.getAllCategories());
-	} 
+	}
+	
+	@PutMapping("/user/update")
+	public ResponseEntity<User> updateUser(@RequestBody User user){
+		return ResponseEntity.ok(userService.updateUser(user));
+	}
 }
